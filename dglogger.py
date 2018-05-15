@@ -19,11 +19,12 @@ def log_config():
     home = os.environ["HOME"]
     machine_user = str.split(platform.uname()[1], ".local")[0] \
         + "_" + os.getlogin()
-    log_file_path = os.path.join(home, "Library/Logs/")
-    if not os.path.isdir(log_file_path):
+    try:
+        log_file_path = os.path.join(home, "Library/Logs/")
+    except:
         log_file_path = home
-
-    l_file = log_file_path + machine_user + ".log"
+    finally:
+        l_file = os.path.join(log_file_path, machine_user + ".log")
 
     logging.basicConfig(
       filename=l_file,
@@ -36,6 +37,7 @@ def log_config():
 
 def log_end(f):
   logging.info(": End")
+  logging.shutdown()
   print("Actions recorded in ", f, ".", sep = "")
 
 
@@ -48,7 +50,7 @@ def log_info(msg, indent = '\n    '):
   print(indent + msg, sep = "")
   logging.info(msg)
 
-
+# os.path.abspath(__file__) or figure out who's calling dglogger
 def log_start():
   logging.info(": Start")
 

@@ -5,7 +5,7 @@
 # * https://docs.python.org/3/howto/logging.html#a-simple-example
 
 import logging
-import os
+from os import environ, getlogin, path
 import platform
 
 
@@ -16,23 +16,23 @@ def log_config():
     :param home: $HOME directory for user running process
     :return: log file name
     """
-    home = os.environ["HOME"]
+    home = environ["HOME"]
     machine_user = str.split(platform.uname()[1], ".local")[0] \
-        + "_" + os.getlogin()
+        + "_" + getlogin()
     try:
-        log_file_path = os.path.join(home, "Library/Logs/")
+        log_file_path = path.join(home, "Library/Logs/")
     except:
         log_file_path = home
     finally:
-        l_file = os.path.join(log_file_path, machine_user + ".log")
+        log_file = path.join(log_file_path, machine_user + ".log")
 
     logging.basicConfig(
-      filename=l_file,
+      filename=log_file,
       format='%(asctime)s %(filename)s %(levelname)s: %(message)s',
       datefmt='%m/%d/%Y %H:%M:%S',
       level=logging.INFO
     )
-    return l_file
+    return log_file
 
 
 def log_end(f):
@@ -50,7 +50,7 @@ def log_info(msg, indent = '\n    '):
   print(indent + msg, sep = "")
   logging.info(msg)
 
-# os.path.abspath(__file__) or figure out who's calling dglogger
+# path.abspath(__file__) or figure out who's calling dglogger
 def log_start():
   logging.info(": Start")
 

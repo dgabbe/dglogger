@@ -3,6 +3,18 @@
 # working from
 # * http://inventwithpython.com/blog/2012/04/06/stop-using-print-for-debugging-a-5-minute-quickstart-guide-to-pythons-logging-module/
 # * https://docs.python.org/3/howto/logging.html#a-simple-example
+# * https://gist.github.com/eric-s-s/11e08dbc38891fa3d0eba5396703afc6
+#
+
+# References:
+# - https://docs.python.org/3/howto/logging-cookbook.html#logging-to-multiple-destinations
+
+#
+# - See if function/file can be added to message
+# - Use logging feature to write to stderr instead of print()
+# - Get testing working
+# - Get module working
+#
 
 import logging
 from os import getlogin, path
@@ -17,6 +29,10 @@ def log_config():
 
     :return: log file name
     """
+
+    # https://docs.python.org/3/howto/logging-cookbook.html#logging-to-multiple-destinations to use instead
+    # of print to stderr.
+
     home = getpwnam(getlogin()).pw_dir
     machine_user = str.split(platform.uname()[1], ".local")[0] + "_" + getlogin()
 
@@ -37,12 +53,12 @@ def log_config():
     return log_file
 
 
-def log_critical(msg, indent="\n    "):
+def log_critical(msg: str, indent: str = "\n    "):
     print(indent + msg, sep="", file=stderr)
     logging.critical(msg)
 
 
-def log_debug(msg, indent="\n    "):
+def log_debug(msg: str, indent: str = "\n    "):
     print(indent + msg, sep="", file=stderr)
     logging.debug(msg)
 
@@ -55,22 +71,22 @@ def log_end():
     print("Actions recorded in ", f, ".", sep="", file=stderr)
 
 
-def log_error(msg, indent="\n    "):
+def log_error(msg: str, indent: str = "\n    "):
     print(indent + msg, sep="", file=stderr)
     logging.error(msg)
 
 
-def log_info(msg, indent="\n    "):
+def log_info(msg: str, indent: str = "\n    "):
     print(indent + msg, sep="", file=stderr)
     logging.info(msg)
 
 
-# path.abspath(__file__) or figure out who's calling dglogger
+# path.abspath(__file__) or figure out who's calling dglogger, think there is a feature for that
 def log_start():
     logging.info(": Start")
 
 
-def log_warning(msg, indent="\n    "):
+def log_warning(msg: str, indent: str = "\n    "):
     print(indent + msg, sep="", file=stderr)
     logging.warning(msg)
 
@@ -82,7 +98,8 @@ def log_warning(msg, indent="\n    "):
 def test():
     log_config()
     log_start()
+    log_info("Testing log_info()")
+    log_warning("Testing log_warning()")
+    log_error("Testing log_error()")
+    log_debug("Testing log_debug()")
     log_end()
-
-
-# Revisit if this code will work on python (v2) as well

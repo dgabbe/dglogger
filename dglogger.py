@@ -3,18 +3,7 @@
 # working from
 # * http://inventwithpython.com/blog/2012/04/06/stop-using-print-for-debugging-a-5-minute-quickstart-guide-to-pythons-logging-module/
 # * https://docs.python.org/3/howto/logging.html#a-simple-example
-# * https://gist.github.com/eric-s-s/11e08dbc38891fa3d0eba5396703afc6
-#
-
-# References:
-# - https://docs.python.org/3/howto/logging-cookbook.html#logging-to-multiple-destinations
-
-#
-# - See if function/file can be added to message
-# - Use logging feature to write to stderr instead of print()
-# - Get testing working
-# - Get module working
-#
+# * Eric's code ideas: https://gist.github.com/eric-s-s/11e08dbc38891fa3d0eba5396703afc6
 
 import logging
 from os import getlogin, path

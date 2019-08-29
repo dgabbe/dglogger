@@ -30,9 +30,7 @@ from sys import stderr
 # change time to exclude milliseconds
 def get_stream_handler() -> StreamHandler:
     # By default goes to stderr
-    console_format = "    %(asctime)s %(levelname)s %(module)s:%(lineno)d %(message)s"
-    # console_format = "    %(Y)s-%(m)s %(levelname)s %(module)s:%(lineno)d %(message)s"
-    stream_formatter = Formatter(fmt=console_format)
+    stream_formatter = Formatter(fmt="    [%(asctime)s] %(levelname)s %(module)s:%(lineno)d %(message)s", datefmt='%H:%M:%S')
     sh = StreamHandler()
     sh.setFormatter(stream_formatter)
     return sh

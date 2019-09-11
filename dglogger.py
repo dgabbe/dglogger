@@ -4,7 +4,7 @@
 # * http://inventwithpython.com/blog/2012/04/06/stop-using-print-for-debugging-a-5-minute-quickstart-guide-to-pythons-logging-module/
 # * https://docs.python.org/3/howto/logging.html#a-simple-example
 # * Eric's code ideas: https://gist.github.com/eric-s-s/11e08dbc38891fa3d0eba5396703afc6
-from functools import partial
+# * Eric's setup.py: <<get github link>>
 from logging import (
     basicConfig,
     critical,
@@ -21,22 +21,23 @@ from logging import (
     warning,
 )
 from os import getlogin, path
-import platform
+from platform import uname
 from pwd import getpwnam
-from sys import stderr
 
 
 # Conditional formatting possible based on levelname?
-# change time to exclude milliseconds
 def get_stream_handler() -> StreamHandler:
     # By default goes to stderr
-    stream_formatter = Formatter(fmt="    [%(asctime)s] %(levelname)s %(module)s:%(lineno)d %(message)s", datefmt='%H:%M:%S')
-    sh = StreamHandler()
-    sh.setFormatter(stream_formatter)
-    return sh
+    stream_formatter = Formatter(
+        fmt="    [%(asctime)s] %(levelname)s %(module)s:%(lineno)d %(message)s",
+        datefmt="%H:%M:%S",
+    )
+    handler = StreamHandler()
+    handler.setFormatter(stream_formatter)
+    return handler
 
 
-# Can this be called from __init__.py? So it's running before main()...
+# Can this be called from __init__.py so it's running before main()?
 def log_config(is_log_file_required=False) -> Logger:
     """Unique name by machine and user.
     OS X: ~/Library/Logs/<machine-name>_<username>.log
@@ -50,7 +51,7 @@ def log_config(is_log_file_required=False) -> Logger:
 
     user = getlogin()
     home_dir = getpwnam(user).pw_dir
-    machine_user = str.split(platform.uname()[1], ".local")[0] + "_" + user
+    machine_user = str.split(uname()[1], ".local")[0] + "_" + user
 
     log_file_path = path.join(home_dir, "Library/Logs/")  # MacOS location
     if not path.exists(log_file_path):
@@ -106,10 +107,6 @@ def log_start():
 
 def log_warning(msg: str):
     warning(msg)
-
-
-print_err = partial(print, file=stderr)
-
 
 #
 # Test

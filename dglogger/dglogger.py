@@ -23,6 +23,7 @@ from logging import (
 from os import getlogin, path
 from platform import uname
 from pwd import getpwnam
+from sys import stderr
 
 
 # Conditional formatting possible based on levelname?
@@ -89,7 +90,7 @@ def log_end():
     f = getLogger().handlers[0].baseFilename
     info("End")
     shutdown()
-    print_err("Actions recorded in", f)
+    print("Actions recorded in", f)
 
 
 def log_error(msg: str):
@@ -108,6 +109,14 @@ def log_start():
 def log_warning(msg: str):
     warning(msg)
 
+
+def log_dev(msg: str, level=info):
+    try:
+        level(msg)
+    except:
+        print("Complete log_dev feature.", file=stderr)
+
+
 #
 # Test
 # Figure out Python unit testing
@@ -120,4 +129,7 @@ def test():
     log_error("Testing log_error()")
     log_debug("Testing log_debug()")
     log_critical("Testing log_critical()")
+    log_dev("log_dev, info level")
+    log_dev("log_dev, warning level", warning)
+    log_dev("log_dev, foo, expecting exception", 'foo')
     log_end()

@@ -1,11 +1,13 @@
 import setuptools
 
+version="0.0.1"
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="dglogger",
-    version="0.0.1",
+    version=version,
     author="David G.",
     author_email="dgabbe@acm.org",
     description="Logging utility for development & production",

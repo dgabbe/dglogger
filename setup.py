@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dglogger",
-    version="0.0.1",
+    version="0.0.2",
     author="David G.",
     author_email="dgabbe@acm.org",
     description="Logging utility for development & production",

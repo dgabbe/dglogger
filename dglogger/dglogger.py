@@ -84,6 +84,13 @@ def log_debug(msg: str):
     debug(msg)
 
 
+def log_dev(msg: str, level=info):
+    try:
+        level(msg)
+    except:
+        print("Complete log_dev feature.", file=stderr)
+
+
 def log_end():
     # https://stackoverflow.com/questions/26017073/how-to-get-filename-from-a-python-logger
     f = getLogger().handlers[0].baseFilename
@@ -108,6 +115,7 @@ def log_start():
 def log_warning(msg: str):
     warning(msg)
 
+
 #
 # Test
 # Figure out Python unit testing
@@ -120,4 +128,5 @@ def test():
     log_error("Testing log_error()")
     log_debug("Testing log_debug()")
     log_critical("Testing log_critical()")
+    log_dev("Testing log_dev()")
     log_end()

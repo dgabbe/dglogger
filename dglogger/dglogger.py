@@ -25,6 +25,9 @@ from platform import uname
 from pwd import getpwnam
 from sys import stderr
 
+configs = {
+    "stderr_only": {}, "file_only": {}, "file_only_required": {}, "both": {}
+    }
 
 # Conditional formatting possible based on levelname?
 def get_stream_handler() -> StreamHandler:
@@ -115,21 +118,3 @@ def log_dev(msg: str, level=info):
         level(msg)
     except:
         print("Complete log_dev feature.", file=stderr)
-
-
-#
-# Test
-# Figure out Python unit testing
-#
-def test():
-    log_config()
-    log_start()
-    log_info("Testing log_info()")
-    log_warning("Testing log_warning()")
-    log_error("Testing log_error()")
-    log_debug("Testing log_debug()")
-    log_critical("Testing log_critical()")
-    log_dev("log_dev, info level")
-    log_dev("log_dev, warning level", warning)
-    log_dev("log_dev, foo, expecting exception", 'foo')
-    log_end()

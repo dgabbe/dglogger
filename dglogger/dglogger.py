@@ -23,7 +23,7 @@ from logging import (
 from os import getlogin, path
 from platform import uname
 from pwd import getpwnam
-from sys import stderr
+from sys import exit, stderr
 
 configs = {
     "stderr_only": {}, "file_only": {}, "file_only_required": {}, "both": {}
@@ -52,32 +52,34 @@ def log_config(is_log_file_required=False) -> Logger:
 
     :return: Logger object
     """
-
-    user = getlogin()
-    home_dir = getpwnam(user).pw_dir
-    machine_user = str.split(uname()[1], ".local")[0] + "_" + user
-
-    log_file_path = path.join(home_dir, "Library/Logs/")  # MacOS location
-    if not path.exists(log_file_path):
-        log_file_path = home_dir  # Linux location
-
-    log_file_name = path.join(log_file_path, machine_user + ".log")
-
+    log_file_name = create_log_file_name()
     try:
         basicConfig(
-            filename=log_file_name,
+            filename=is_log_file_required,
             format="%(asctime)s %(filename)s %(levelname)s: %(message)s",
             datefmt="%m/%d/%Y %H:%M:%S",
             level=INFO,
         )
     except (PermissionError, FileNotFoundError):
         exception(f"Could not create log file at: {log_file_name}")
-        # Add check for is_required...
+        if is_log_file_required:
+            exit("No log file requires this program to stop.")
 
     logger = getLogger()
     console_handler = get_stream_handler()
     logger.addHandler(console_handler)
     return logger
+
+
+def create_log_file_name():
+    user = getlogin()
+    home_dir = getpwnam(user).pw_dir
+    machine_user = str.split(uname()[1], ".local")[0] + "_" + user
+    log_file_path = path.join(home_dir, "Library/Logs/")  # MacOS location
+    if not path.exists(log_file_path):
+        log_file_path = home_dir  # Linux location
+    log_file_name = path.join(log_file_path, machine_user + ".log")
+    return log_file_name
 
 
 def log_critical(msg: str):
@@ -117,4 +119,4 @@ def log_dev(msg: str, level=info):
     try:
         level(msg)
     except:
-        print("Complete log_dev feature.", file=stderr)
+        print(">>>Oops - Complete log_dev() implementation!", file=stderr)

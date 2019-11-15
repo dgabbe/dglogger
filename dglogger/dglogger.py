@@ -24,10 +24,7 @@ from os import getlogin, path
 from platform import uname
 from pwd import getpwnam
 from sys import exit, stderr
-
-configs = {
-    "stderr_only": {}, "file_only": {}, "file_only_required": {}, "both": {}
-    }
+import dglogger.configs
 
 # Conditional formatting possible based on levelname?
 def get_stream_handler() -> StreamHandler:
@@ -40,6 +37,8 @@ def get_stream_handler() -> StreamHandler:
     handler.setFormatter(stream_formatter)
     return handler
 
+def log_config_new(config="console", config_dict= dglogger.configs, is_log_file_required=False) -> Logger:
+    pass
 
 # Can this be called from __init__.py so it's running before main()?
 def log_config(is_log_file_required=False) -> Logger:

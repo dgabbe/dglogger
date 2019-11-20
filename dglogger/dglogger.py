@@ -37,11 +37,15 @@ def get_stream_handler() -> StreamHandler:
     handler.setFormatter(stream_formatter)
     return handler
 
-def log_config_new(config="console", config_dict= dglogger.configs, is_log_file_required=False) -> Logger:
+
+def log_config_new(
+    config="console", config_dict=dglogger.configs, is_log_file_required: bool = False
+) -> Logger:
     pass
 
+
 # Can this be called from __init__.py so it's running before main()?
-def log_config(is_log_file_required=False) -> Logger:
+def log_config(is_log_file_required: bool = False) -> Logger:
     """Unique name by machine and user.
     OS X: ~/Library/Logs/<machine-name>_<username>.log
 
@@ -114,8 +118,8 @@ def log_warning(msg: str):
     warning(msg)
 
 
-def log_dev(msg: str, level=info):
+def log_dev(msg: str, dev: str = "unknown", level=info):
     try:
-        level(msg)
+        level("[" + dev + "] " + msg)
     except:
         print(">>>Oops - Complete log_dev() implementation!", file=stderr)

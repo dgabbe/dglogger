@@ -44,6 +44,17 @@ def log_config_new(
     pass
 
 
+def instantiate_console():
+    logger = getLogger()
+    console_handler = get_stream_handler()
+    logger.addHandler(console_handler)
+    return logger
+
+
+def instantiate_tqdm_progress():
+    pass
+
+
 # Can this be called from __init__.py so it's running before main()?
 def log_config(is_log_file_required: bool = False) -> Logger:
     """Unique name by machine and user.
@@ -58,7 +69,7 @@ def log_config(is_log_file_required: bool = False) -> Logger:
     log_file_name = create_log_file_name()
     try:
         basicConfig(
-            filename=is_log_file_required,
+            filename=log_file_name,
             format="%(asctime)s %(filename)s %(levelname)s: %(message)s",
             datefmt="%m/%d/%Y %H:%M:%S",
             level=INFO,

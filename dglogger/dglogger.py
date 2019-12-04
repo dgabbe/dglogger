@@ -9,7 +9,9 @@ from logging import (
     basicConfig,
     critical,
     debug,
+    DEBUG,
     error,
+    ERROR,
     exception,
     Formatter,
     getLogger,
@@ -19,6 +21,7 @@ from logging import (
     shutdown,
     StreamHandler,
     warning,
+    WARNING,
 )
 from os import getlogin, path
 from platform import uname
@@ -38,21 +41,41 @@ def get_stream_handler() -> StreamHandler:
     return handler
 
 
-def log_config_new(
-    config="console", config_dict=dglogger.configs, is_log_file_required: bool = False
-) -> Logger:
-    pass
+# part of instantiate_log_file
+def get_file_handler() -> Optional[FileHandler]:
+    log_file_name = create_log_file_name()
+
+    # log_directory = os.path.join(home_path, mac_os_log_directory)
+    # if not os.path.exists(log_directory):
+    #     log_directory = os.path.join(home_path, 'Logs')
+    #     if not os.path.exists(log_directory):
+    #         os.mkdir(log_directory)
+    # full_log_file_path = os.path.join(log_directory, log_file_name)
+    fh = FileHandler(log_file_name)
+# start coding here!!!
+    file_formatter = Formatter(
+        fmt="{asctime} {filename} {levelname}: {message}",
+        datefmt="%m/%d/%Y %H:%M:%S",
+        style='{'
+    )
+    fh.setFormatter(file_formatter)
+    return fh
 
 
 def instantiate_console():
     logger = getLogger()
     console_handler = get_stream_handler()
     logger.addHandler(console_handler)
+    logger.setLevel(INFO)
     return logger
 
 
 def instantiate_tqdm_progress():
-    pass
+    logger = getLogger()
+    progress_handler = get_stream_handler()
+    logger.addHandler(progress_handler)
+    logger.setLevel(INFO)
+    return logger
 
 
 # Can this be called from __init__.py so it's running before main()?
@@ -79,10 +102,7 @@ def log_config(is_log_file_required: bool = False) -> Logger:
         if is_log_file_required:
             exit("No log file requires this program to stop.")
 
-    logger = getLogger()
-    console_handler = get_stream_handler()
-    logger.addHandler(console_handler)
-    return logger
+    return # figure out if it makes sense to return a handler
 
 
 def create_log_file_name():

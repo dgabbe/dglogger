@@ -75,6 +75,7 @@ def instantiate_console():
     return logger
 
 
+# Wonder if this should be a file handler so you can 'tail' it.
 def instantiate_tqdm_progress():
     logger = getLogger()
     progress_handler = get_stream_handler()

@@ -18,6 +18,7 @@ from logging import (
     error,
     ERROR,
     exception,
+    FileHandler,
     Formatter,
     getLogger,
     INFO,
@@ -47,7 +48,7 @@ def get_stream_handler() -> StreamHandler:
 
 
 # part of instantiate_log_file
-def get_file_handler() -> Optional[FileHandler]:
+def get_file_handler() -> FileHandler:
     log_file_name = create_log_file_name()
 
     # log_directory = os.path.join(home_path, mac_os_log_directory)

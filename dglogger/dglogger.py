@@ -5,6 +5,11 @@
 # * https://docs.python.org/3/howto/logging.html#a-simple-example
 # * Eric's code ideas: https://gist.github.com/eric-s-s/11e08dbc38891fa3d0eba5396703afc6
 # * Eric's setup.py: <<get github link>>
+
+# Packaging links:
+# * https://stackoverflow.com/questions/47193079/module-vs-package
+# * https://stackoverflow.com/questions/7948494/whats-the-difference-between-a-python-module-and-a-python-package
+
 from logging import (
     basicConfig,
     critical,

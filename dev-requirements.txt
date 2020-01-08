@@ -2,3 +2,4 @@
 black>=19.3b0 # PyCharm external tool config: $PyInterpreterDirectory$/black
 docutils
 pytest>=5.1.2
+pytest-watch>=4.0

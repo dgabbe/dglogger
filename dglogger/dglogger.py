@@ -75,6 +75,12 @@ def instantiate_console():
     logger.setLevel(INFO)
     return logger
 
+def instantiate_dev_console():
+    pass
+
+def instantiate_log_file():
+    pass
+
 
 # Wonder if this should be a file handler so you can 'tail' it.
 def instantiate_tqdm_progress():
@@ -86,7 +92,7 @@ def instantiate_tqdm_progress():
 
 
 # Can this be called from __init__.py so it's running before main()?
-def log_config(is_log_file_required: bool = False) -> Logger:
+def instantiate_log_file(log_file_required: bool = False) -> Logger:
     """Unique name by machine and user.
     OS X: ~/Library/Logs/<machine-name>_<username>.log
 

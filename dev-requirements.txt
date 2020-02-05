@@ -1,5 +1,6 @@
 -r requirements.txt
 black>=19.3b0 # PyCharm external tool config: $PyInterpreterDirectory$/black
 docutils
+pyscaffold
 pytest>=5.1.2
 pytest-watch>=4.0

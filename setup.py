@@ -1,6 +1,6 @@
 import setuptools
 
-version="0.0.1"
+version="0.0.2"
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -24,5 +24,5 @@ setuptools.setup(
         "Topic :: System :: Logging",
         "Topic :: Utilities",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )

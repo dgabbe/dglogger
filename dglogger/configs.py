@@ -1,8 +1,8 @@
 from enum import Enum, auto
 import dglogger
 
-# wonder if an __iter__ is created?
 class Log_configs(Enum):
+    NOT_IMPLEMENTED = auto()
     CONSOLE = auto()
     DEV_CONSOLE = auto()
     LOG_FILE = auto()
@@ -10,6 +10,7 @@ class Log_configs(Enum):
     TQDM_PROGRESS = auto()
 
 # BUG - No exception handling for Log_configs that don't have a function
+# Catch as NotImplementedError
 def get_func(which: Log_configs):
     f_dict = {
         Log_configs.CONSOLE: dglogger.dglogger.instantiate_console,

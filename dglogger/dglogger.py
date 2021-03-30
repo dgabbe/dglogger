@@ -68,7 +68,7 @@ def get_file_handler() -> FileHandler:
     return fh
 
 
-def instantiate_console():
+def instantiate_console() -> Logger:
     logger = getLogger()
     console_handler = get_stream_handler()
     logger.addHandler(console_handler)
@@ -83,7 +83,7 @@ def instantiate_log_file():
 
 
 # Wonder if this should be a file handler so you can 'tail' it.
-def instantiate_tqdm_progress():
+def instantiate_tqdm_progress() -> Logger:
     logger = getLogger()
     progress_handler = get_stream_handler()
     logger.addHandler(progress_handler)
@@ -118,7 +118,7 @@ def instantiate_log_file(log_file_required: bool = False) -> Logger:
     return # figure out if it makes sense to return a handler
 
 
-def create_log_file_name():
+def create_log_file_name() -> object:
     user = getlogin()
     home_dir = getpwnam(user).pw_dir
     machine_user = str.split(uname()[1], ".local")[0] + "_" + user

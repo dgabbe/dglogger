@@ -3,7 +3,6 @@ __name__ = "dglogger"
 __package__ = "dglogger"
 
 from dglogger.dglogger import (
-    log_config,
     log_critical,
     log_debug,
     log_dev,

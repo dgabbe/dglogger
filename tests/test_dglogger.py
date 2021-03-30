@@ -2,7 +2,6 @@
 from logging import warning
 
 from dglogger import (
-    log_config,
     log_start,
     log_info,
     log_warning,

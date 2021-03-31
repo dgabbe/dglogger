@@ -10,6 +10,8 @@
 # * https://stackoverflow.com/questions/47193079/module-vs-package
 # * https://stackoverflow.com/questions/7948494/whats-the-difference-between-a-python-module-and-a-python-package
 
+# Questions to research
+# instantiate_log_file(): Can this be called from __init__.py so it's running before main()?
 from logging import (
     basicConfig,
     critical,
@@ -29,9 +31,9 @@ from logging import (
     warning,
     WARNING,
 )
-from os import getlogin, path
+from os import getuid, path
 from platform import uname
-from pwd import getpwnam
+from pwd import getpwnam, getpwuid
 from sys import exit, stderr
 import dglogger.configs
 
@@ -58,11 +60,11 @@ def get_file_handler() -> FileHandler:
     #         os.mkdir(log_directory)
     # full_log_file_path = os.path.join(log_directory, log_file_name)
     fh = FileHandler(log_file_name)
-# start coding here!!!
+    # start coding here!!!
     file_formatter = Formatter(
         fmt="{asctime} {filename} {levelname}: {message}",
         datefmt="%m/%d/%Y %H:%M:%S",
-        style='{'
+        style="{",
     )
     fh.setFormatter(file_formatter)
     return fh
@@ -75,10 +77,8 @@ def instantiate_console() -> Logger:
     logger.setLevel(INFO)
     return logger
 
-def instantiate_dev_console():
-    pass
 
-def instantiate_log_file():
+def instantiate_dev_console():
     pass
 
 
@@ -91,10 +91,13 @@ def instantiate_tqdm_progress() -> Logger:
     return logger
 
 
-# Can this be called from __init__.py so it's running before main()?
-def instantiate_log_file(log_file_required: bool = False) -> Logger:
-    """Unique name by machine and user.
+# start here!!! add option file name parameter
+def instantiate_log_file(is_log_file_required: bool = False, file_name) -> Logger:
+    """Defaults to
     OS X: ~/Library/Logs/<machine-name>_<username>.log
+    Linux: ~/<machine-name>_<username>.log
+
+    Optional file_name argument.
 
     References:
     - https://docs.python.org/3/library/logging.html
@@ -115,18 +118,22 @@ def instantiate_log_file(log_file_required: bool = False) -> Logger:
         if is_log_file_required:
             exit("No log file requires this program to stop.")
 
-    return # figure out if it makes sense to return a handler
+    return  # figure out if it makes sense to return a handler
 
 
-def create_log_file_name() -> object:
-    user = getlogin()
+def create_log_file_name() -> str:
+    #
+    # MacOS specific: Launched PyCharm-CE using Spotlight (⌘ space). In the Python Console,
+    # getlogin() returned '_spotlight'. Use getpwuid() instead.
+    user = getpwuid(getuid())[0]
+    machine = str.split(uname()[1], ".local")[0]
+    log_file_name = machine + "_" + user
     home_dir = getpwnam(user).pw_dir
-    machine_user = str.split(uname()[1], ".local")[0] + "_" + user
-    log_file_path = path.join(home_dir, "Library/Logs/")  # MacOS location
-    if not path.exists(log_file_path):
-        log_file_path = home_dir  # Linux location
-    log_file_name = path.join(log_file_path, machine_user + ".log")
-    return log_file_name
+    log_file_dir = path.join(home_dir, "Library/Logs/")  # MacOS location
+    if not path.exists(log_file_dir):
+        log_file_dir = home_dir  # Linux location
+    log_file_path = path.join(log_file_dir, log_file_name + ".log")
+    return log_file_path
 
 
 def log_critical(msg: str):

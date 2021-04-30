@@ -35,7 +35,7 @@ from os import getuid, path
 from platform import uname
 from pwd import getpwnam, getpwuid
 from sys import exit, stderr
-import dglogger.configs
+#import .configs
 
 # Conditional formatting possible based on levelname?
 def get_stream_handler() -> StreamHandler:
@@ -92,7 +92,7 @@ def instantiate_tqdm_progress() -> Logger:
 
 
 # start here!!! add option file name parameter
-def instantiate_log_file(is_log_file_required: bool = False, file_name) -> Logger:
+def instantiate_log_file(file_name, is_log_file_required: bool = False) -> Logger:
     """Defaults to
     OS X: ~/Library/Logs/<machine-name>_<username>.log
     Linux: ~/<machine-name>_<username>.log

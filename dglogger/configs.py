@@ -1,11 +1,12 @@
 from enum import Enum, auto
-import dglogger
+# import dglogger
 
 class Log_configs(Enum):
     NOT_IMPLEMENTED = auto()
     CONSOLE = auto()
     DEV_CONSOLE = auto()
     LOG_FILE = auto()
+    LOG_FILE_AND_CONSOLE = auto()
     LOG_FILE_REQUIRED = auto()
     TQDM_PROGRESS = auto()
 

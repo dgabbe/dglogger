@@ -18,7 +18,8 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: POSIX :: Linux",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Software Development",
         "Topic :: System :: Logging",

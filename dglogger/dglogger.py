@@ -127,12 +127,12 @@ def create_log_file_name() -> str:
     # getlogin() returned '_spotlight'. Use getpwuid() instead.
     user = getpwuid(getuid())[0]
     machine = str.split(uname()[1], ".local")[0]
-    log_file_name = machine + "_" + user
+    log_file_name = machine + "_" + user + ".log"
     home_dir = getpwnam(user).pw_dir
     log_file_dir = path.join(home_dir, "Library/Logs/")  # MacOS location
     if not path.exists(log_file_dir):
         log_file_dir = home_dir  # Linux location
-    log_file_path = path.join(log_file_dir, log_file_name + ".log")
+    log_file_path = path.join(log_file_dir, log_file_name)
     return log_file_path
 
 

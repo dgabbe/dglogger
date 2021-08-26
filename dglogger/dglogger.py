@@ -7,6 +7,7 @@
 # * Eric's setup.py: <<get github link>>
 
 # Packaging links:
+# * https://packaging.python.org/tutorials/packaging-projects/
 # * https://stackoverflow.com/questions/47193079/module-vs-package
 # * https://stackoverflow.com/questions/7948494/whats-the-difference-between-a-python-module-and-a-python-package
 
